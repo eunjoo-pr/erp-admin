@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Company {
+  id                String    @id @default(uuid())
+  corporationType   String    @map("corporation_type")
+  companyName       String    @map("company_name")
+  ceoName           String    @map("ceo_name")
+  businessNumber    String    @map("business_number")
+  corporationNumber String?   @map("corporation_number")
+  foundingDate      DateTime? @map("founding_date")
+  phone             String?
+  email             String?
+  homepage          String?
+  status            String    @default("사용중")   // ← 추가
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
+
+  @@map("companies")
+}
