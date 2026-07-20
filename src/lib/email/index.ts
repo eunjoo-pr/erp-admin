@@ -21,6 +21,10 @@ function getFromAddress() {
 async function sendEmail({ to, subject, html }: SendEmailParams) {
   const from = getFromAddress();
 
+  if (!resend) {
+    throw new Error("RESEND_API_KEY is not set.");
+  }
+
   const { data, error } = await resend.emails.send({
     from,
     to,
@@ -49,6 +53,10 @@ async function sendTemplateEmail({
   variables,
 }: SendTemplateEmailParams) {
   const from = getFromAddress();
+
+  if (!resend) {
+    throw new Error("RESEND_API_KEY is not set.");
+  }
 
   const { data, error } = await resend.emails.send({
     from,
