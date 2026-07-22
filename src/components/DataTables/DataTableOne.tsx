@@ -9,7 +9,8 @@ type Customer = {
   ceoName: string;
   siteUrl: string;
   businessNumber: string;
-  status: string;
+  adminId: string;
+  adminEmail: string;
 };
 
 export default function DataTableOne() {
@@ -18,13 +19,14 @@ export default function DataTableOne() {
   const [open, setOpen] = useState(false);
 
   const [customer, setCustomer] = useState<Customer>({
-    companyName: "",
-    corporationType: "비영리",
-    ceoName: "",
-    siteUrl: "",
-    businessNumber: "",
-    status: "사용중",
-  });
+  companyName: "",
+  corporationType: "비영리",
+  ceoName: "",
+  siteUrl: "",
+  businessNumber: "",
+  adminId: "",
+  adminEmail: "",
+});
 
   function updateField(
     field: keyof Customer,
@@ -55,13 +57,14 @@ export default function DataTableOne() {
     setOpen(false);
 
     setCustomer({
-      companyName: "",
-      corporationType: "비영리",
-      ceoName: "",
-      siteUrl: "",
-      businessNumber: "",
-      status: "사용중",
-    });
+  companyName: "",
+  corporationType: "비영리",
+  ceoName: "",
+  siteUrl: "",
+  businessNumber: "",
+  adminId: "",
+  adminEmail: "",
+});
 
     router.refresh();
   }
@@ -152,23 +155,30 @@ export default function DataTableOne() {
                   }
                 />
               </div>
+          <div>
+  <label>관리자 아이디</label>
 
-              <div>
-                <label>상태</label>
+  <input
+    className="mt-2 w-full rounded border p-3"
+    value={customer.adminId}
+    onChange={(e) =>
+      updateField("adminId", e.target.value)
+    }
+  />
+</div>
 
-                <select
-                  className="mt-2 w-full rounded border p-3"
-                  value={customer.status}
-                  onChange={(e) =>
-                    updateField("status", e.target.value)
-                  }
-                >
-                  <option>사용중</option>
-                  <option>중지</option>
-                  <option>준비중</option>
-                </select>
-              </div>
+<div>
+  <label>관리자 이메일</label>
 
+  <input
+    className="mt-2 w-full rounded border p-3"
+    value={customer.adminEmail}
+    onChange={(e) =>
+      updateField("adminEmail", e.target.value)
+    }
+  />
+</div>
+             
             </div>
 
             <div className="mt-8 flex justify-end gap-3">
