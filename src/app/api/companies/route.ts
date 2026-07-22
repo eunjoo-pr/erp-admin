@@ -22,20 +22,19 @@ export async function POST(request: Request) {
 
     for (const customer of customers) {
       await prisma.company.create({
-        data: {
+       data: {
   corporationType: customer.corporationType,
   companyName: customer.companyName,
   ceoName: customer.ceoName,
   businessNumber: customer.businessNumber,
   homepage: customer.siteUrl,
-  status: customer.status,
 }
       });
     }
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error(error);
+    console.error("POST ERROR:", error);
     return NextResponse.json({ success: false }, { status: 500 });
   }
 }
