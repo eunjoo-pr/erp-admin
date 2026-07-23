@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
+  console.log("Page 시작");
   const companies = await prisma.company.findMany({
     orderBy: {
       createdAt: "desc",
@@ -17,15 +18,16 @@ export default async function Page() {
   });
 
   console.log(companies);
-  
+  console.log("Page return");
+
   return (
     <>
       <Breadcrumb pageName="고객사 관리" />
 
       <div className="grid grid-cols-1 gap-5 md:gap-7 2xl:gap-10">
-        <DataTableOne />
-        <DataTableTwo companies={companies} />
-      </div>
+  <DataTableOne />
+  <DataTableTwo companies={companies} />
+</div>
     </>
   );
 }

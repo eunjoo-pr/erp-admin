@@ -26,22 +26,15 @@ export function Sidebar() {
   };
 
   useEffect(() => {
-    // Keep collapsible open, when it's subpage is active
-    NAV_DATA.some((section) => {
-      return section.items.some((item) => {
-        return item.items.some((subItem) => {
-          if (subItem.url === pathname) {
-            if (!expandedItems.includes(item.title)) {
-              toggleExpanded(item.title);
-            }
+  const activeItem = NAV_DATA.flatMap((section) => section.items).find((item) =>
+    item.items.some((subItem) => subItem.url === pathname),
+  );
 
-            // Break the loop
-            return true;
-          }
-        });
-      });
-    });
-  }, [pathname]);
+  if (activeItem) {
+    setExpandedItems([activeItem.title]);
+  }
+}, [pathname]);
+
 
   return (
     <>

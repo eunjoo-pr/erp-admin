@@ -22,12 +22,18 @@ export async function POST(request: Request) {
 
     for (const customer of customers) {
       await prisma.company.create({
-       data: {
+   data: {
   corporationType: customer.corporationType,
   companyName: customer.companyName,
   ceoName: customer.ceoName,
   businessNumber: customer.businessNumber,
+
   homepage: customer.siteUrl,
+
+  adminId: customer.adminId,
+  adminPassword: customer.adminPassword,
+
+  email: customer.adminEmail,
 }
       });
     }

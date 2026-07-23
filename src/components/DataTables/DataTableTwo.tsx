@@ -18,13 +18,12 @@ type CompanyRow = {
   고객사명: string;
   법인구분: string;
   대표자: string;
-  사이트주소: string;
   사업자등록번호: string;
+  아이디: string;
+  초기비밀번호: string;
   상태: string;
   관리: string;
 };
-
-
 
 // table header
 const columns: ColumnDef<CompanyRow>[] = [
@@ -41,12 +40,16 @@ const columns: ColumnDef<CompanyRow>[] = [
   accessorKey: "대표자",
 },
 {
-  header: "사이트 주소",
-  accessorKey: "사이트주소",
-},
-{
   header: "사업자등록번호",
   accessorKey: "사업자등록번호",
+},
+{
+  header: "아이디",
+  accessorKey: "아이디",
+},
+{
+  header: "초기비밀번호",
+  accessorKey: "초기비밀번호",
 },
 {
   header: "상태",
@@ -58,10 +61,21 @@ const columns: ColumnDef<CompanyRow>[] = [
 },
 ];
 
-import { Company } from "../../../prisma/generated/prisma/client";
+type Company = {
+  id: string;
+  companyName: string;
+  corporationType: string;
+  ceoName: string;
+  businessNumber: string;
+  adminId: string | null;
+  adminPassword: string | null;
+  status: string | null;
+};
+
 type TableProps = {
   companies?: Company[];
 };
+
  export default function DataTableTwo({
   companies = [],
 }: TableProps) {
@@ -71,13 +85,14 @@ type TableProps = {
   const [globalFilter, setGlobalFilter] = useState("");
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
-  const data: CompanyRow[] = companies.map((company) => ({
+ const data: CompanyRow[] = companies.map((company) => ({
   고객사명: company.companyName,
   법인구분: company.corporationType,
   대표자: company.ceoName,
-  사이트주소: company.homepage ?? "",
   사업자등록번호: company.businessNumber,
-  상태: company.status ?? "",
+  아이디: company.adminId ?? "",
+  초기비밀번호: company.adminPassword ?? "",
+  상태: company.status ?? "사용중",
   관리: "변경",
 }));
 

@@ -90,6 +90,10 @@ model Company {
   email             String?
   homepage          String?
   siteUrl           String?   @map("site_url")
+
+  adminId           String?   @map("admin_id")
+  adminPassword     String?   @map("admin_password")
+
   status            String?   @default("사용중")
 
   createdAt DateTime @default(now()) @map("created_at")
