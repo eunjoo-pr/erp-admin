@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db/prisma";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 export async function GET() {
   try {
@@ -21,21 +23,34 @@ export async function POST(request: Request) {
     const customers = await request.json();
 
     for (const customer of customers) {
-      await prisma.company.create({
-   data: {
-  corporationType: customer.corporationType,
-  companyName: customer.companyName,
-  ceoName: customer.ceoName,
-  businessNumber: customer.businessNumber,
+    
+     await prisma.company.create({
+  data: {
+    corporationType: customer.corporationType,
+    companyName: customer.companyName,
+    ceoName: customer.ceoName,
+    businessNumber: customer.businessNumber,
 
-  homepage: customer.siteUrl,
+    homepage: customer.siteUrl,
 
-  adminId: customer.adminId,
-  adminPassword: customer.adminPassword,
+    adminId: customer.adminId,
+    adminPassword: customer.adminPassword,
 
-  email: customer.adminEmail,
-}
-      });
+    email: customer.adminEmail,
+  }
+});
+
+const result = await auth.api.signUpEmail({
+  body: {
+    name: customer.companyName,
+    email: customer.adminEmail,
+    password: customer.adminPassword,
+  },
+  headers: await headers(),
+});
+
+console.log("회원 생성 결과:", result);
+ 
     }
 
     return NextResponse.json({ success: true });
